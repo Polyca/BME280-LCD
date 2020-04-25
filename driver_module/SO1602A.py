@@ -46,7 +46,7 @@ class SO1602A():
 
     def set_cursor(self, coordinate=[0, 0]):  # coordinate = [row, columm]
         # If columm number is grater than 16, the number is adjusted under 16
-        if coordinate[1] > 16:
+        if coordinate[1] >= 16:
             coordinate[1] -= 16
 
         if coordinate[0] == 0:
