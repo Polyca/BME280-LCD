@@ -6,13 +6,13 @@ from smbus2 import SMBus
 class SO1602A():
     def __init__(self, bus_address=1, sa0=0, cursor=False, blink=False):
         self.bus = SMBus(bus_address)
-        # select I2C slave address by sa0 status
+        # Select I2C slave address by sa0 status
         if sa0 == 0:
             self.address = 0x3c
         else:
             self.address = 0x3d
 
-        # initialize LCD
+        # Initialize LCD
         self.clear_display()
         self.return_home()
         self.display_on(cursor, blink)
@@ -45,7 +45,7 @@ class SO1602A():
                 self.bus.write_byte_data(self.address, 0x00, 0x18)
 
     def set_cursor(self, coordinate=[0, 0]):  # coordinate = [row, columm]
-        # if columm number is grater than 16, the number is adjusted under 16
+        # If columm number is grater than 16, the number is adjusted under 16
         if coordinate[1] > 16:
             coordinate[1] -= 16
 
