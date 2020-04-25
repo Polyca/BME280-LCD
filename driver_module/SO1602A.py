@@ -59,6 +59,10 @@ class SO1602A():
             for i in range(len(str)):
                 self.bus.write_byte_data(self.address, 0x40, ord(str[i]))
 
+    def print_char(self, char_code):
+        # type: (int) -> None
+        self.bus.write_byte_data(self.address, 0x40, char_code)
+
 
 if __name__ == '__main__':
     pass
