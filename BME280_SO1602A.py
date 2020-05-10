@@ -13,15 +13,32 @@ def main():
     temperature = bme.temperature
     humidity = bme.humidity
     pressure = bme.pressure
-
-    temperature_str = 'TEMP:{}'.format(Decimal(temperature).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
-    humidity_str = 'RH:{}%'.format(Decimal(humidity).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
-    pressure_str = 'PRESSURE:{}hPa'.format(Decimal(pressure / 100).quantize(Decimal('0'), rounding=ROUND_HALF_UP))
     
-    print(temperature_str)
-    print(humidity_str)
-    print(pressure_str)
+    # Rounding data
+    temperature_dec = Decimal(temperature).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
+    humidity_dec = Decimal(humidity).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
+    pressure_dec = Decimal(pressure / 100).quantize(Decimal('0'), rounding=ROUND_HALF_UP)
 
+    # Create string
+    if temperature_dec < 10:
+        temperature_str = 'TEMP: {}'.format(temperature_dec)
+    else:
+        temperature_str = 'TEMP:{}'.format(temperature_dec)
+
+    if humidity_dec < 10:
+        humidity_str = 'RH: {}%'.format(humidity_dec)
+    elif humidity_dec > 99:
+        humidity_dec = 99
+        humidity_str = 'RH:{}%'.format(humidity_dec)
+    else:
+        humidity_str = 'RH:{}%'.format(humidity_dec)
+
+    if pressure_dec < 1000:
+        pressure_str = 'PRESSURE: {}hPa'.format(pressure_dec)
+    else:
+        pressure_str = 'PRESSURE:{}hPa'.format(pressure_dec)
+
+    # Display
     lcd.print_str(str=temperature_str)
     lcd.print_char(char_code=0xdf)  # print ℃
     lcd.print_char(char_code=ord('C'))
